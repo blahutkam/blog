@@ -2,7 +2,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Box, Container, Typography } from "@material-ui/core";
 
-const Hero = () => {
+const Hero = ({ heading, subHeading, note, postDate }) => {
   const useStyles = makeStyles((theme) => ({
     hero: {
       backgroundColor: "#bbb",
@@ -21,19 +21,25 @@ const Hero = () => {
   return (
     <Box className={classes.hero}>
       <Container>
-        <Typography variant="h1">Ahoj</Typography>
-        <Typography>...vitejte na </Typography>
-        <Typography variant="h4" component="h2">
-          Day xx - tohle jsem udelal
-        </Typography>
+        {heading ? <Typography variant="h1">{heading}</Typography> : null}
 
-        <Typography
-          variant="subtitle1"
-          color="textSecondary"
-          className={classes.date}
-        >
-          2/22/2021
-        </Typography>
+        {note ? <Typography>{note}</Typography> : null}
+
+        {subHeading ? (
+          <Typography variant="h4" component="h2">
+            {subHeading}
+          </Typography>
+        ) : null}
+
+        {postDate ? (
+          <Typography
+            variant="subtitle1"
+            color="textSecondary"
+            className={classes.date}
+          >
+            {postDate}
+          </Typography>
+        ) : null}
       </Container>
     </Box>
   );

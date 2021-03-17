@@ -1,5 +1,4 @@
 import React from "react";
-import reactLogo from "../media/react.png";
 
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
@@ -11,10 +10,12 @@ import Typography from "@material-ui/core/Typography";
 import { Box, useMediaQuery } from "@material-ui/core";
 import { useTheme } from "@material-ui/core/styles";
 
-const MediaCard = () => {
+import { useHistory, withRouter } from "react-router-dom";
+
+const MediaCard = ({ post, index, linkUrl, match }) => {
   const useStyles = makeStyles({
     media: {
-      height: 140,
+      height: 160,
       minWidth: 200,
     },
     cardActionBox: {
@@ -28,34 +29,40 @@ const MediaCard = () => {
       display: "flex",
       flexDirection: "row",
     },
+    fill: {
+      width: "-webkit-fill-available",
+    },
   });
 
   const classes = useStyles();
 
   //redux
   const theme = useTheme();
-  const isSmall = useMediaQuery(theme.breakpoints.down("md"));
+  //const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
+  const isSmall = useMediaQuery(theme.breakpoints.only("sm"));
+
+  const history = useHistory();
 
   return (
     <Card>
-      <CardActionArea>
+      {/* <CardActionArea onClick={() => history.push(`${match.url}${linkUrl}`)}> */}
+      <CardActionArea onClick={() => history.push(`${match.url}${linkUrl}`)}>
         <Box className={isSmall ? classes.row : ""}>
           <CardMedia
-            image={reactLogo}
-            title="Live from space album cover"
+            image={post.image}
+            title={post.title}
             className={classes.media}
           />
 
-          <CardContent>
+          <CardContent className={isSmall ? classes.fill : ""}>
             <Typography variant="h5" component="h2">
-              Lizard King
+              {post.title}
             </Typography>
             <Typography gutterBottom component="p">
-              2/22/2021
+              {post.date}
             </Typography>
             <Typography variant="body2" color="textSecondary" component="p">
-              Lizards are a widespread group of squamate reptiles, with over
-              6,000 species, ranging across all continents except Antarctica
+              {post.teaser}
             </Typography>
           </CardContent>
 
@@ -79,4 +86,4 @@ const MediaCard = () => {
   );
 };
 
-export default MediaCard;
+export default withRouter(MediaCard);

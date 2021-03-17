@@ -1,14 +1,17 @@
 import React from "react";
+import { connect } from "react-redux";
 import { signInWithGoogle } from "../firebase/firebase.utils";
 import { auth } from "../firebase/firebase.utils";
+
+//import { setCurrentUser } from "../redux/user/user.actions";
 
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-// import TransitionsModal from "./Modal.component";
-// import Sign from "./Sign.component";
+import { Box } from "@material-ui/core";
+import { Link } from "react-router-dom";
 
 // import IconButton from "@material-ui/core/IconButton";
 // import MenuIcon from "@material-ui/icons/Menu";
@@ -25,9 +28,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ButtonAppBar({ currentUser }) {
+const ButtonAppBar = ({ currentUser }) => {
   const classes = useStyles();
-
+  console.log(currentUser);
   return (
     <div className={classes.root}>
       <AppBar position="static">
@@ -37,27 +40,34 @@ export default function ButtonAppBar({ currentUser }) {
             className={classes.menuButton}
             color="inherit"
             aria-label="menu"
-          >
+            >
             <MenuIcon />
           </IconButton> */}
           <Typography variant="h6" className={classes.title}>
-            Motivated Developer
+            {currentUser
+              ? "Welcome " + currentUser.displayName
+              : "Sign in to leave a comment =>"}
           </Typography>
 
-          {/* <TransitionsModal>
-            <Sign />
-          </TransitionsModal> */}
+          <Link to="/">home</Link>
+          <Link to="/blog">blog</Link>
 
           {currentUser ? (
-            <Button
-              variant="outlined"
-              color="secondary"
-              onClick={() => auth.signOut()}
-            >
-              Sign out
-            </Button>
+            <Box display="flex">
+              <Button
+                variant="outlined"
+                color="secondary"
+                onClick={() => auth.signOut()}
+              >
+                Sign out
+              </Button>
+            </Box>
           ) : (
-            <Button color="inherit" onClick={signInWithGoogle}>
+            <Button
+              color="inherit"
+              variant="outlined"
+              onClick={signInWithGoogle}
+            >
               Sign in With Google
             </Button>
           )}
@@ -65,4 +75,9 @@ export default function ButtonAppBar({ currentUser }) {
       </AppBar>
     </div>
   );
-}
+};
+
+//state - top level root reducer
+const mapStateToProps = (state) => ({ currentUser: state.user.currentUser });
+
+export default connect(mapStateToProps)(ButtonAppBar);
