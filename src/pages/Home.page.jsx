@@ -1,12 +1,19 @@
 import React from "react";
 import Hero from "../sharedComponents/Hero.component";
 
-const Home = () => {
+const heroTextProps = {
+  heading: "Home page",
+  subHeading: "",
+  note: "",
+  postDate: "",
+};
+
+const HomePage = () => {
   return (
     <>
-      <Hero heading="Home Page" />
+      <Hero {...heroTextProps} />
     </>
   );
 };
 
-export default Home;
+export default HomePage;

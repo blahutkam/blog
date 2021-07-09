@@ -7,20 +7,22 @@ import theme from "./theme";
 // import { DataProvider } from "./context/DataContext";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
-import store from "./redux/store";
+import { PersistGate } from "redux-persist/integration/react";
+
+import { store, persistor } from "./redux/store";
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      {/* <DataProvider> */}
-      <ThemeProvider theme={theme}>
-        <BrowserRouter>
+  //<React.StrictMode>
+  <Provider store={store}>
+    <ThemeProvider theme={theme}>
+      <BrowserRouter>
+        <PersistGate persistor={persistor}>
           <App />
-        </BrowserRouter>
-      </ThemeProvider>
-      {/* </DataProvider> */}
-    </Provider>
-  </React.StrictMode>,
+        </PersistGate>
+      </BrowserRouter>
+    </ThemeProvider>
+  </Provider>,
+  // </React.StrictMode>,
   document.getElementById("root")
 );
 

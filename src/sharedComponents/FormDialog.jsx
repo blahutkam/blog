@@ -9,11 +9,11 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 
 // /import PostForm from "../PostForm.component";
 import { useForm } from "react-hook-form";
-import { Form } from "../Form.component";
-import { appInit, firestore } from "../../firebase/firebase.utils";
-import Today from "../../utility/Today.component";
+import { Form } from "./Form.component";
+import { appInit, firestore } from "../firebase/firebase.utils";
+import Today from "../utility/Today.component";
 
-export default function FormDialog() {
+const FormDialog = () => {
   //new post inputs
   const [valueTitle, setValueTitle] = useState("");
   const [valueTeaser, setValueTeaser] = useState("");
@@ -38,39 +38,24 @@ export default function FormDialog() {
     const image = e.target.files[0];
     const storageRef = appInit.storage().ref();
     const fileRef = storageRef.child(image.name);
-    await fileRef.put(image).then(() => {
-      console.log(image, "uploaded");
-    });
+    await fileRef.put(image).then(() => {});
     setImageUrl(await fileRef.getDownloadURL());
   };
 
   const onSubmit = (e) => {
     //when click submit form doesnt trigger navigation
-    // e.preventDefault();
-
-    //image uploaod onSubmit
-    // const storageRef = appInit.storage().ref();
-    // const fileRef = storageRef.child(data.postImage[0].name);
-    // //do something when image is uploaded
-    // fileRef.put(data.postImage[0]).then(() => {
-    //   console.log("file uploaded");
-    // });
+    //e.preventDefault();
 
     //post onSubmit
-    firestore
-      .collection("posts")
-      .add({
-        title: valueTitle,
-        teaser: valueTeaser,
-        article: valueArticle,
-        image: imageUrl,
-        date: Today,
-      })
-      // .set({
-      //   // title: valueTitle,
-      //   image: imageUrl,
-      // })
-      .then(() => alert("article posted"));
+    firestore.collection("posts").doc(valueTitle).set({
+      title: valueTitle,
+      teaser: valueTeaser,
+      article: valueArticle,
+      image: imageUrl,
+      date: Today,
+      timestamp: Date.now(),
+    });
+    // .then(() => alert("article posted"));
 
     //remove inserted values after submit
     setValueTitle("");
@@ -110,6 +95,7 @@ export default function FormDialog() {
               </Box>
               <Box mb={2}>
                 <TextField
+                  //Add a post title
                   required
                   ref={register}
                   name="postTitle"
@@ -118,11 +104,11 @@ export default function FormDialog() {
                   value={valueTitle}
                   onChange={(e) => setValueTitle(e.target.value)}
                   fullWidth
-                  //placeholder="Add a post title..."
                 />
               </Box>
               <Box mb={2}>
                 <TextField
+                  //Add a teaser
                   required
                   ref={register}
                   name="postTeaser"
@@ -133,11 +119,11 @@ export default function FormDialog() {
                   onChange={(e) => setValueTeaser(e.target.value)}
                   fullWidth
                   rows={2}
-                  //placeholder="Add a teaser..."
                 />
               </Box>
               <Box mb={2}>
                 <TextField
+                  //Write an article
                   required
                   ref={register}
                   name="postText"
@@ -148,7 +134,6 @@ export default function FormDialog() {
                   onChange={(e) => setValueArticle(e.target.value)}
                   fullWidth
                   rows={6}
-                  //placeholder="Write an article..."
                 />
               </Box>
             </Box>
@@ -170,4 +155,6 @@ export default function FormDialog() {
       </Dialog>
     </>
   );
-}
+};
+
+export default FormDialog;

@@ -2,7 +2,9 @@
 
 import { Box, Typography } from "@material-ui/core";
 
-const Comment = ({ comment, index }) => {
+const Comment = ({ comment }) => {
+  //console.log("comment", comment);
+  const { name, dateAndTime, text } = comment;
   return (
     <Box mb={3}>
       <Box
@@ -12,13 +14,13 @@ const Comment = ({ comment, index }) => {
         p={1}
         bgcolor="text.secondary"
       >
-        <Typography variant="overline">{comment.name}</Typography>
+        <Typography variant="overline">{name}</Typography>
         <Typography color="textSecondary" variant="overline">
-          {comment.date}
+          {dateAndTime}
         </Typography>
       </Box>
       <Typography color="textPrimary" variant="body2">
-        {comment.text}
+        {text}
       </Typography>
     </Box>
   );

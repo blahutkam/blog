@@ -30,10 +30,9 @@ const useStyles = makeStyles((theme) => ({
 
 const ButtonAppBar = ({ currentUser }) => {
   const classes = useStyles();
-  console.log(currentUser);
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="static" color="transparent">
         <Toolbar>
           {/* <IconButton
             edge="start"

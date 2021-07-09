@@ -1,68 +1,58 @@
-import { useState } from "react";
+import { useEffect } from "react";
 import { connect } from "react-redux";
-//import { makeStyles } from "@material-ui/core/styles";
+import {
+  selectIsPostFetching,
+  selectPostCommentsForPreview,
+} from "../../redux/comments/comments.selectors";
+import { fetchCommentsStartAsync } from "../../redux/comments/comments.actions";
+import { createStructuredSelector } from "reselect";
 import { Box, Typography } from "@material-ui/core";
 
 import Comment from "./Comment.component";
 import CommentForm from "./CommentForm.component";
-import Today from "../../utility/Today.component";
+//import WithSpinner from "../HOC/WithSpinner.component";
 
-const CommentSection = ({ currentUser }) => {
-  //where does text come from??
-  const addComment = (text) => {
-    const name = currentUser.displayName;
-    const date = Today;
-    const newComments = [...comments, { text, name, date }];
-    setComments(newComments);
-  };
+const CommentSection = ({
+  postId,
+  fetchCommentsStartAsync,
+  comments,
+  isLoading,
+}) => {
+  useEffect(() => {
+    fetchCommentsStartAsync(postId);
+  }, []);
 
-  // [current state, function that updates current state] = useState([default])
-  const [comments, setComments] = useState([
-    // {
-    //   name: "Martin",
-    //   date: "12/2/2021",
-    //   text:
-    //     "In the whole world I figure there ARE MORE GUNS THAN MUSICAL INSTRUMENTS. And it should be the other way around. Make love not war, make music not hate.",
-    // },
-    // {
-    //   name: "Christy",
-    //   date: "12/3/2021",
-    //   text: "comment2",
-    // },
-    // {
-    //   name: "Alma",
-    //   date: "12/4/2021",
-    //   text: "comment3",
-    // },
-  ]);
+  // console.log("isLoading", isLoading);
+  // console.log("reduxComments", comments);
 
   return (
     <Box mb={10}>
+      <CommentForm postId={postId} />
+
       <Box mb={1}>
         <Typography variant="overline" gutterBottom>
-          XX Comments
+          {comments.length === 0
+            ? "No Comments Yet"
+            : comments.length === 1
+            ? "1 comment"
+            : comments.length + " comments"}
         </Typography>
       </Box>
-
-      {currentUser ? (
-        <CommentForm addComment={addComment} />
-      ) : (
-        <Box
-          mb={2}
-          bgcolor="secondary.main"
-          style={{ color: "#ffffff", padding: "10px" }}
-        >
-          <Typography>log in to leave a comment</Typography>
-        </Box>
-      )}
-
       {comments.map((comment, index) => (
-        <Comment key={index} index={index} comment={comment} />
+        <Comment comment={comment} key={index} />
       ))}
     </Box>
   );
 };
 
-const mapStateToProps = (state) => ({ currentUser: state.user.currentUser });
+const mapStateToProps = createStructuredSelector({
+  isLoading: selectIsPostFetching,
+  comments: selectPostCommentsForPreview,
+});
 
-export default connect(mapStateToProps)(CommentSection);
+const mapDispatchToProps = (dispatch) => ({
+  fetchCommentsStartAsync: (props) => dispatch(fetchCommentsStartAsync(props)),
+});
+
+//isLoading issue => missing container & withSpinner
+export default connect(mapStateToProps, mapDispatchToProps)(CommentSection);

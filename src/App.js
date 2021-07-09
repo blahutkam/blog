@@ -8,13 +8,13 @@ import { Switch, Route } from "react-router-dom";
 import { setCurrentUser } from "./redux/user/user.actions";
 
 import AppBar from "./sharedComponents/AppBar.component";
-import Home from "./pages/Home.page";
-import Blog from "./pages/Blog.page";
-import Post from "./pages/Post.page";
+import HomePage from "./pages/Home.page";
+import BlogPage from "./pages/Blog.page";
 
 class App extends React.Component {
   unsubscribeFromAuth = null;
 
+  // rewrite to hook
   componentDidMount() {
     const { setCurrentUser } = this.props;
 
@@ -27,35 +27,13 @@ class App extends React.Component {
             id: snapShot.id,
             ...snapShot.data(),
           });
+          // console.log(snapShot.id);
         });
       }
 
       setCurrentUser(userAuth);
     });
   }
-
-  // componentDidMount() {
-  //   auth.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
-  //     if (userAuth) {
-  //       const userRef = createUserProfileDocument(userAuth);
-
-  //       (await userRef).onSnapshot((snapShot) => {
-  //         this.setState(
-  //           {
-  //             currentUser: {
-  //               id: snapShot.id,
-  //               ...snapShot.data(),
-  //             },
-  //           },
-  //           () => {
-  //             console.log(this.state);
-  //           }
-  //         );
-  //       });
-  //     }
-  //     this.setState({ currentUser: userAuth });
-  //   });
-  // }
 
   componentWillUnmount() {
     this.unsubscribeFromAuth();
@@ -64,12 +42,10 @@ class App extends React.Component {
   render() {
     return (
       <Fragment>
-        {/* redux */}
         <AppBar />
         <Switch>
-          <Route exact path="/" component={Home} />
-          <Route exact path="/blog" component={Blog} />
-          <Route path="/blog/post" component={Post} />
+          <Route exact path="/" component={HomePage} />
+          <Route path="/blog" component={BlogPage} />
         </Switch>
       </Fragment>
     );
