@@ -13,9 +13,9 @@ import {
 import CommentSection from "../Comments/CommentSection.component";
 import { useTheme } from "@material-ui/core/styles";
 import Hero from "../Hero.component";
-import { Link } from "react-router-dom";
 
 import PostsOverviewAside from "./PostsOverviewAside.component";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   date: {
@@ -34,7 +34,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Post = ({ post }) => {
+  //console.log("i fire once");
   //console.log(post);
+  //console.log(isSmall);
   const { title, teaser, article, date, image, id } = post;
   const classes = useStyles();
   const theme = useTheme();

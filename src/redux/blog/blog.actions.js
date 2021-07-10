@@ -20,9 +20,8 @@ export const fetchPostsFailure = (errorMessage) => ({
 
 export const fetchPostsStartAsync = () => {
   return (dispatch) => {
-    //console.log("fetchPostsStartAsync");
-
     const fetchPosts = () => {
+      //console.log("fetchPosts");
       const PostsRef = firestore.collection("posts");
 
       dispatch(fetchPostsStart());

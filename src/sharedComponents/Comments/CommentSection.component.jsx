@@ -18,9 +18,10 @@ const CommentSection = ({
   comments,
   isLoading,
 }) => {
+  // console.log("i fire once");
   useEffect(() => {
     fetchCommentsStartAsync(postId);
-  }, []);
+  }, [fetchCommentsStartAsync, postId]);
 
   // console.log("isLoading", isLoading);
   // console.log("reduxComments", comments);

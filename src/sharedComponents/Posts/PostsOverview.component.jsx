@@ -25,6 +25,7 @@ const PostsOverview = ({ posts, user }) => {
   const theme = useTheme();
   const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
 
+  console.log("fired");
   //console.log("posts", posts);
   //console.log(user);
   //console.log(posts[0].routeName);
