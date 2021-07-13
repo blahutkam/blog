@@ -74,8 +74,8 @@ const ButtonAppBar = ({ currentUser }) => {
                 blog
               </Link>
 
-              <Box display="flex">
-                {currentUser ? (
+              {currentUser ? (
+                <Box display="flex">
                   <Tooltip title={currentUser.displayName}>
                     <IconButton
                       className={classes.menuButton}
@@ -86,7 +86,9 @@ const ButtonAppBar = ({ currentUser }) => {
                       <AccountCircleIcon color="secondary" />
                     </IconButton>
                   </Tooltip>
-                ) : (
+                </Box>
+              ) : (
+                <Box display="flex">
                   <Tooltip title="Log in to leave a comment">
                     <IconButton
                       className={classes.menuButton}
@@ -97,13 +99,13 @@ const ButtonAppBar = ({ currentUser }) => {
                       <AccountCircleIcon />
                     </IconButton>
                   </Tooltip>
-                )}
-              </Box>
+                </Box>
+              )}
             </nav>
           )}
 
           {isSmall && (
-            <div>
+            <Box>
               <IconButton
                 edge="start"
                 className={classes.menuButton}
@@ -155,7 +157,7 @@ const ButtonAppBar = ({ currentUser }) => {
                   </Link>
                 </MenuItem>
               </Menu>
-            </div>
+            </Box>
           )}
         </Toolbar>
       </AppBar>
