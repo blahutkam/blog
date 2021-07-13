@@ -1,9 +1,13 @@
 import { createMuiTheme } from "@material-ui/core/styles";
 
 const theme = createMuiTheme({
+  typography: {
+    //link cdn in index.html
+    fontFamily: ["Montserrat", "sans-serif"].join(","),
+  },
   pallete: {
     primary: {
-      main: "#764abc",
+      main: "#000",
     },
   },
   background: {

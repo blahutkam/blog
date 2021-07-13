@@ -1,4 +1,49 @@
 body {
+    font-family: "Montserrat" !important;
+    font-size: 12px;
     margin: 0;
     padding: 0;
+}
+
+a {
+    color: #222222; 
+    text-decoration: none;
+}
+
+.hyperlink {
+    color: #222222;
+    font-weight: 500;
+    padding: 20px;
+    opacity: 0.6;
+    transition: opacity 200ms;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-decoration: none;
+    
+    &:hover { 
+        color: #222222;
+        opacity: 1;
+    }
+
+    &:active{ 
+        font-weight: bold;
+    }
+
+    &:visited {
+        color: #222222;
+    }
+}
+
+.main-nav {
+
+}
+
+.menu-icon {
+ margin-left: 10px;
+}
+
+.dropdown-menu-button{
+    &:hover {
+       background-color: transparent !important; 
+    }
 }
